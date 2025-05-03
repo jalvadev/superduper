@@ -1,9 +1,5 @@
 ﻿using SuperDuper.Resources;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SuperDuper.DAL
 {
@@ -15,11 +11,9 @@ namespace SuperDuper.DAL
             var type = typeof(T);
             var tableName = type.Name;
 
-            // TODO: Formatear a plural (?)
+            tableName = tableName.ToSnakeCase();
 
-            // TODO: Formatear a snake_case.
-
-            return Result<string>.Success("");
+            return Result<string>.Success(tableName);
         }
     }
 }

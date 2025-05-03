@@ -34,17 +34,25 @@ namespace SuperDuper.DAL
             var type = typeof(T);
             var properties = type.GetProperties();
 
+            string query = "INSERT INTO {0} ({1}) VALUES ({2});";
+            string fields = string.Empty;
+            string values = string.Empty;
+
             foreach (var property in properties)
             {
-
+                fields += $"{property.Name.ToSnakeCase()}, ";
             }
+            fields = fields.Substring(0, fields.LastIndexOf(','));
 
             foreach (var property in properties)
             {
-                property.GetValue(model);
+                values += $"@{property.Name}, ";
             }
+            values = values.Substring(0, values.LastIndexOf(","));
 
-            return Result<string>.Failure("");
+            query = string.Format(query, table, fields, values);
+
+            return Result<string>.Success(query);
         }
 
         private static Result<string> GetSelect<T>(T model, string table, bool applyNulls)

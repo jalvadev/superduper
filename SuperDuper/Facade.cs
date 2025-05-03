@@ -22,7 +22,7 @@ namespace SuperDuper
             if(!result.IsSuccess)
                 return Result<T>.Failure(result.ErrorMessage);
 
-            return Result<T>.Success(result.Value);
+            return Result<T>.Failure(queryResult.Value); // for testing.
         }
     }
 }

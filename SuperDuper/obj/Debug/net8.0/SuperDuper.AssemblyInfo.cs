@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SuperDuper")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f9cb8d8d79d40ed75a3b11695a66f8113addf584")]
 [assembly: System.Reflection.AssemblyProductAttribute("SuperDuper")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SuperDuper")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

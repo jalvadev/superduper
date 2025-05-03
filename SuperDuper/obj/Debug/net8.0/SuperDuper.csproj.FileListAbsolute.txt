@@ -1,0 +1,12 @@
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\bin\Debug\net8.0\SuperDuper.deps.json
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\bin\Debug\net8.0\SuperDuper.dll
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\bin\Debug\net8.0\SuperDuper.pdb
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\obj\Debug\net8.0\SuperDuper.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\obj\Debug\net8.0\SuperDuper.AssemblyInfoInputs.cache
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\obj\Debug\net8.0\SuperDuper.AssemblyInfo.cs
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\obj\Debug\net8.0\SuperDuper.csproj.CoreCompileInputs.cache
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\obj\Debug\net8.0\SuperDuper.sourcelink.json
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\obj\Debug\net8.0\SuperDuper.dll
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\obj\Debug\net8.0\refint\SuperDuper.dll
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\obj\Debug\net8.0\SuperDuper.pdb
+C:\Users\alvar\source\repos\SuperDuper\SuperDuper\obj\Debug\net8.0\ref\SuperDuper.dll
