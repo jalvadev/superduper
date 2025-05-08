@@ -32,8 +32,7 @@ namespace SuperDuper.DAL
 
         private static Result<string> GetInsert<T>(T model, string table, bool applyNulls)
         {
-            var type = typeof(T);
-            var properties = type.GetProperties();
+            var properties = GetProperties(model, applyNulls);
 
             string query = "INSERT INTO {0} ({1}) VALUES ({2});";
 
@@ -47,20 +46,32 @@ namespace SuperDuper.DAL
 
         private static Result<string> GetSelect<T>(T model, string table, bool applyNulls)
         {
-            return Result<string>.Failure("");
+            var properties = GetProperties(model, applyNulls);
+
+            string query = "SELECT {0} FROM {1}";
+
+            string fields = GetFields(properties);
+            string filters = GetFilters(model, properties);
+
+            query = string.Format(query, fields, table);
+            
+            if (!string.IsNullOrEmpty(filters))
+                query += $" WHERE {filters}";
+
+            return Result<string>.Success(query);
         }
 
         private static Result<string> GetUpdate<T>(T model, string table, bool applyNulls)
         {
-            var type = typeof(T);
-            var properties = type.GetProperties();
+            var properties = GetProperties(model, applyNulls);
+
             string query = "UPDATE {0} SET {1}";
 
             string fields = GetFields(properties);
             string values = GetFieldWithValues(properties);
             string filters = GetFilters(model, properties);
 
-            query = string.Format(query, values);
+            query = string.Format(query, table, values);
 
             if(!string.IsNullOrEmpty(filters))
                 query += $" WHERE {filters}";
@@ -72,12 +83,39 @@ namespace SuperDuper.DAL
 
         private static Result<string> GetDelete<T>(T model, string table, bool applyNulls)
         {
-            return Result<string>.Failure("");
+            var properties = GetProperties(model, applyNulls);
+
+            string query = "DELETE FROM {0}";
+
+            string fields = GetFields(properties);
+            string filters = GetFilters(model, properties);
+
+            query = string.Format(query, table);
+
+            if (!string.IsNullOrEmpty(filters))
+                query += $" WHERE {filters}";
+
+            query += ";";
+
+            return Result<string>.Success(query);
+        }
+
+        private static PropertyInfo[] GetProperties<T>(T model, bool applyNulls)
+        {
+            var type = typeof(T);
+            var properties = type.GetProperties();
+            if (!applyNulls)
+                properties = properties.Where(p => p.GetValue(model) != null).ToArray();
+
+            return properties;
         }
 
         private static string GetFields(PropertyInfo[] properties)
         {
             string fields = string.Empty;
+
+            // Remove Filters property because is a key word.
+            properties = properties.Where(p => p.Name != "Filters").ToArray();
 
             foreach (var property in properties)
             {
@@ -92,6 +130,9 @@ namespace SuperDuper.DAL
         {
             string values = string.Empty;
 
+            // Remove Filters property because is a key word.
+            properties = properties.Where(p => p.Name != "Filters").ToArray();
+
             foreach (var property in properties)
             {
                 values += $"@{property.Name}, ";
@@ -104,6 +145,9 @@ namespace SuperDuper.DAL
         private static string GetFieldWithValues(PropertyInfo[] properties)
         {
             string values = string.Empty;
+
+            // Remove Filters property because is a key word.
+            properties = properties.Where(p => p.Name != "Filters").ToArray();
 
             foreach (var property in properties)
             {
@@ -123,10 +167,10 @@ namespace SuperDuper.DAL
                 return filters;
 
             var values = filterProperty.GetValue(model);
-            if (values == null || values.GetType() != typeof(List<string>))
+            if (values == null || values.GetType() != typeof(string[]))
                 return filters;
 
-            List<string> list = values != null ? (List<string>)values : new List<string>();
+            string[] list = values != null ? (string[])values : Array.Empty<string>();
             foreach(var currentFilter in list)
                 filters += $"{currentFilter} = @{currentFilter} AND ";
             filters = filters.Substring(0, filters.Length - 4);
